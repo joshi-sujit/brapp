@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Customer;
+use App\Car;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $customers = Customer::where('visibility', 1)->count();
+        $cars = Car::where('visibility', 1)->count();
+        return view('home', [
+            'customers_no' => $customers,
+            'cars_no' => $cars
+        ]);
     }
 }

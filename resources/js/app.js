@@ -26,6 +26,13 @@ Vue.component(
     require("./components/ExampleComponent.vue").default
 );
 
+Vue.component(
+    "dashboard-card",
+    require("./components/DashboardCard.vue").default
+);
+
+Vue.component("customer-manager", require("./components/CustomerManager.vue"));
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

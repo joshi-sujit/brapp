@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="{{ url('home') }}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
@@ -30,9 +30,19 @@
    
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item active">
-      <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-        <i class="fas fa-fw fa-folder"></i>
-        <span>Pages</span>
+      <a class="nav-link" href="{{ url('customers') }}">
+        <i class="fas fa-fw fa-users"></i>
+        <span>Customers</span>
+      </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <li class="nav-item active">
+      <a class="nav-link" href="#">
+        <i class="fas fa-fw fa-car"></i>
+        <span>Cars</span>
       </a>
     </li>
 

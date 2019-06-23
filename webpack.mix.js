@@ -23,3 +23,5 @@ if (mix.inProduction()) {
 }
 
 mix.browserSync("dev.br");
+
+mix.disableNotifications();
