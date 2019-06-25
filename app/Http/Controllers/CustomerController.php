@@ -24,8 +24,16 @@ class CustomerController extends Controller
      */
     public function index()
     {
+
         $customers = Customer::where('visibility', 1)->get();
         return view('admin.customers.index', ['customers' => $customers]);
+    }
+
+
+    public function upsert()
+    {
+        $this->authorize('manage', 'App\Customer');
+        return ['success' => true];
     }
 
     /**

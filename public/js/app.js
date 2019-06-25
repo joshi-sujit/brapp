@@ -1844,8 +1844,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["customers"]
+  props: ["initialCustomers"],
+  data: function data() {
+    return {
+      customers: _.cloneDeep(this.initialCustomers)
+    };
+  },
+  created: function created() {
+    axios.post('/api/customers/upsert');
+  },
+  methods: {
+    removeCustomer: function removeCustomer(index) {
+      if (confirm("Are you sure?")) {
+        this.customers.splice(index, 1);
+      }
+    },
+    addCustomer: function addCustomer() {
+      var _this = this;
+
+      this.customers.push({
+        id: 0,
+        name: "",
+        mobile: ""
+      });
+      this.$nextTick(function () {
+        window.scrollTo(0, document.body.scrollHeight);
+
+        _this.$refs[""][0].focus();
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -37378,11 +37412,74 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    _vm._l(_vm.customers, function(customer) {
-      return _c("div", { key: customer.id }, [_vm._v(_vm._s(customer.name))])
-    }),
-    0
+    "form",
+    [
+      _c("a", { staticClass: "add", on: { click: _vm.addCustomer } }, [
+        _vm._v("+ Add Customer")
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.customers, function(customer, index) {
+        return _c("div", { key: customer.id }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: customer.name,
+                expression: "customer.name"
+              }
+            ],
+            ref: customer.name,
+            refInFor: true,
+            attrs: { type: "text" },
+            domProps: { value: customer.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(customer, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: customer.mobile,
+                expression: "customer.mobile"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: customer.mobile },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(customer, "mobile", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "remove",
+              on: {
+                click: function($event) {
+                  return _vm.removeCustomer(index)
+                }
+              }
+            },
+            [_vm._v("delete")]
+          )
+        ])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -49655,7 +49752,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component("dashboard-card", __webpack_require__(/*! ./components/DashboardCard.vue */ "./resources/js/components/DashboardCard.vue")["default"]);
-Vue.component("customer-manager", __webpack_require__(/*! ./components/CustomerManager.vue */ "./resources/js/components/CustomerManager.vue"));
+Vue.component("customer-manager", __webpack_require__(/*! ./components/CustomerManager.vue */ "./resources/js/components/CustomerManager.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -8,10 +8,9 @@
   </div>
 
   <div class="row">
+  <dashboard-card card-title="Customers" card-qty="{{ $customers }}" card-icon="fa-users"></dashboard-card>
 
-    <dashboard-card card-title="Customers" card-qty="{{ $customers_no }}" card-icon="fa-users"></dashboard-card>
-
-    <dashboard-card card-title="Cars" card-qty="{{ $cars_no }}" card-icon="fa-car"></dashboard-card>
+    <dashboard-card card-title="Cars" card-qty="{{ $cars }}" card-icon="fa-car"></dashboard-card>
 
   </div>
 

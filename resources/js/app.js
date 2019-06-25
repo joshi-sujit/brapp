@@ -31,7 +31,7 @@ Vue.component(
     require("./components/DashboardCard.vue").default
 );
 
-Vue.component("customer-manager", require("./components/CustomerManager.vue"));
+Vue.component("customer-manager", require("./components/CustomerManager.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -5,7 +5,7 @@
 @section('content')
 
     <h1>Customers</h1>
-    <customer-manager v-bind:customers="{{ $customers }}"></customer-manager>
+    <customer-manager :initial-customers="{{ $customers }}"></customer-manager>
 
 
 @endsection

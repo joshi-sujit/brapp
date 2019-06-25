@@ -27,9 +27,10 @@ class HomeController extends Controller
     {
         $customers = Customer::where('visibility', 1)->count();
         $cars = Car::where('visibility', 1)->count();
+
         return view('home', [
-            'customers_no' => $customers,
-            'cars_no' => $cars
+            'customers' => $customers,
+            'cars' => $cars
         ]);
     }
 }
