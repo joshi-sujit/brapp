@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/customers/upsert', 'CustomerController@upsert');
+Route::delete('/customers/{customer}', 'CustomerController@destroy');

@@ -30,10 +30,20 @@ class CustomerController extends Controller
     }
 
 
-    public function upsert()
+    public function upsert(Request $request)
     {
         $this->authorize('manage', 'App\Customer');
-        return ['success' => true];
+        $customers = $request->post('customers');
+        foreach ($customers as $cus) {
+            if ($cus['id']) {
+                Customer::where('id', $cus['id'])->update($cus);
+            } else {
+                Customer::create($cus);
+            }
+        }
+
+
+        return ['success' => true, 'customers' => Customer::all()];
     }
 
     /**
@@ -99,6 +109,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $this->authorize('delete', $customer);
+        $customer->delete();
+        return ['success' => true];
     }
 }

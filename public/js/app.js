@@ -1849,20 +1849,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["initialCustomers"],
   data: function data() {
     return {
-      customers: _.cloneDeep(this.initialCustomers)
+      customers: _.cloneDeep(this.initialCustomers),
+      feedback: ""
     };
   },
   created: function created() {
-    axios.post('/api/customers/upsert');
+    axios.post("/api/customers/upsert");
   },
   methods: {
     removeCustomer: function removeCustomer(index) {
       if (confirm("Are you sure?")) {
-        this.customers.splice(index, 1);
+        var id = this.customers[index].id;
+
+        if (id > 0) {
+          axios["delete"]("/api/customers/" + id);
+        }
       }
     },
     addCustomer: function addCustomer() {
@@ -1877,6 +1885,18 @@ __webpack_require__.r(__webpack_exports__);
         window.scrollTo(0, document.body.scrollHeight);
 
         _this.$refs[""][0].focus();
+      });
+    },
+    saveCustomer: function saveCustomer() {
+      var _this2 = this;
+
+      axios.post("/api/customers/upsert", {
+        customers: this.customers
+      }).then(function (res) {
+        if (res.data.success) {
+          _this2.feedback = "Changed";
+          _this2.customers = res.customers;
+        }
       });
     }
   }
@@ -37413,6 +37433,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "form",
+    {
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.saveCustomer($event)
+        }
+      }
+    },
     [
       _c("a", { staticClass: "add", on: { click: _vm.addCustomer } }, [
         _vm._v("+ Add Customer")
@@ -37439,6 +37467,29 @@ var render = function() {
                   return
                 }
                 _vm.$set(customer, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: customer.email,
+                expression: "customer.email"
+              }
+            ],
+            ref: customer.email,
+            refInFor: true,
+            attrs: { type: "text" },
+            domProps: { value: customer.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(customer, "email", $event.target.value)
               }
             }
           }),
@@ -37477,7 +37528,11 @@ var render = function() {
             [_vm._v("delete")]
           )
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c("button", { attrs: { type: "submit" } }, [_vm._v("Save")]),
+      _vm._v(" "),
+      _c("div", [_vm._v(_vm._s(_vm.feedback))])
     ],
     2
   )

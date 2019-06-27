@@ -12,20 +12,11 @@ class CustomerPolicy
 
     public function before($user, $ability)
     {
-
-        return true;
+        if ($user->is_admin) {
+            return true;
+        }
     }
 
-    /**
-     * Determine whether the user can view any customers.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
 
     /**
      * Determine whether the user can view the customer.
@@ -34,9 +25,9 @@ class CustomerPolicy
      * @param  \App\Customer  $customer
      * @return mixed
      */
-    public function view(User $user, Customer $customer)
+    public function manage(User $user)
     {
-        //
+        return $user->is_admin;
     }
 
     /**
